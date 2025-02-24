@@ -1,0 +1,905 @@
+python3 gemini.py
+Processing file: ./products.json
+
+--- SKU Pattern Analysis ---
+
+The SKUs in this dataset follow a pattern that reflects product characteristics, particularly relating to the base product and its size variations. Here's a breakdown of the observed structure:
+
+* **Prefix:**  `CRY` - This is a consistent prefix across all SKUs, likely short for "CRYstal," indicating the product category.  This strongly suggests all items belong to the same overarching product type.
+
+* **Base Product ID:**  The next 2-3 digits (e.g., `039`, `051`, `6302`) appear to represent a unique identifier for a specific crystal award design.  For example, `039` represents "Crystal Cup with Gold Handles and Stem," while `051` is for "Crystal Cup on Black Pedestal Base."
+
+* **Size Suffix:**  A single letter suffix often follows the Base Product ID. This suffix denotes the size variant:
+    * `L`: Large
+    * `M`: Medium
+    * `S`: Small
+    * `XL`: Extra Large
+
+* **Exceptions/Variations:** Some SKUs deviate slightly:
+    * SKUs like `CRY071`, `CRY072`, `CRY073`, `CRY121`, and `CRY122` do not use the L/M/S suffix.  Instead, the numerical portion increments, suggesting size or possibly style variations within a closely related product group. These seem to apply when there aren't the standard S/M/L size options.  For example, CRY071, CRY072, and CRY073 are all "Crystal Cup on Black Pedestal Base," but in different sizes not categorized as S/M/L.
+    * `CRY104` and `CRY110` also omit the L/M/S suffixes and appear to be unique product IDs without size variants in this dataset.
+
+**Structured Insights:**
+
+```json
+{
+  "prefix": "CRY",
+  "product_id_length": "2-4 digits",
+  "size_variations": {
+    "suffixes": {
+      "L": "Large",
+      "M": "Medium",
+      "S": "Small",
+      "XL": "Extra Large"
+    },
+    "numeric": "Sequential numbers indicate variations, often where L/M/S not used"
+  },
+  "exceptions": "Some products use unique numeric IDs without size suffixes"
+}
+```
+
+
+This analysis provides a general understanding of the SKU structure. Examining a larger dataset would help confirm these patterns and potentially reveal additional variations or exceptions. Analyzing SKUs in conjunction with product names and other attributes (like size and color) will give a complete understanding of how SKUs are assigned.
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1740423159.166073 40264199 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+(base) dylanmurzello@MacBookAir Json % python3 gemini.py
+Processing file: chunk_1.json
+
+--- SKU Pattern Analysis for chunk_1.json ---
+
+## SKU Pattern Investigation Report - Crystal Awards
+
+**Case:** Analysis of Crystal Award product SKUs to identify underlying patterns and anomalies.
+
+**Findings:**
+
+**1. Common Prefixes and Their Meanings:**
+
+* **CRY:**  This prefix is consistent across all SKUs and clearly identifies the product category as "CRYstal".
+
+**2. Base Product Identifiers:**
+
+* Following the "CRY" prefix, the next two or three digits (e.g., "039", "051", "6302") appear to represent a unique base product identifier. This number likely corresponds to a specific design or style of crystal award.  For example, "039" signifies "Crystal Cup with Gold Handles and Stem", while "051" represents "Crystal Cup on Black Pedestal Base".
+
+**3. Size and Color Variations:**
+
+* **Size Variations:**  A single letter suffix following the base product identifier often denotes the size.  
+    * **L:** Large
+    * **M:** Medium
+    * **S:** Small
+    * **XL:** Extra Large
+* **Color Variations:** Color variations are less explicitly encoded in the SKU. The base product number itself seems to incorporate the standard color. For example, "CRY039" always has gold handles/stem, "CRY051" and "CRY6302" are consistently on black bases, and "CRY052" has silver handles/stem.  Exceptions exist where color is part of the product name but not directly reflected in the base SKU, such as "CRY071", "CRY072", and "CRY073", which are all black but have different numbers. This suggests the numbers in these cases represent different designs rather than color variations.
+
+**4. Unique Numbering or Suffix Trends:**
+
+* The data shows a trend where most SKUs use a 3-digit base identifier after "CRY" (e.g. "001", "003", "017"). However, a few exceptions exist with longer numerical identifiers like "CRY6302" which has a 4-digit identifier.  This four-digit number is then followed by size variations (L and M), suggesting a separate numbering scheme might be used for certain product lines or a later addition to the catalog. "CRY121" and "CRY122" also deviate slightly, possibly indicating a different subcategory within the crystal plates.
+
+**5. Odd Exceptions to Typical SKU Rules:**
+
+* **CRY071, CRY072, CRY073:** These SKUs share the "Crystal Cup on Black Pedestal Base" product name but have sequential numerical identifiers without size letters, deviating from the L/M/S system. This sequence implies a different sizing system based on increasing numerical value.
+* **CRY104 and CRY110:** These SKUs lack the L/M/S size suffix despite having size information in the data.  They use a different three-digit identifier and seem to encode size directly into the base product number, breaking the established pattern. This might be due to these being single size products or a remnant of an older SKU generation system.
+* **Inconsistent SizeCategory:**  Some items labeled as "Large" in "SizeCategory" actually have an "S" suffix in their SKU, which usually denotes "Small." This inconsistency needs further investigation and correction.
+
+
+**Conclusion:**
+
+The SKUs generally follow a "CRY[Base Product Number][Size]" structure.  The base product number usually encapsulates the core design and frequently the color.  However, several exceptions and inconsistencies exist, suggesting either evolution of the SKU system over time or distinct numbering practices for specific product groups.  Further investigation and potentially standardization of the SKU system are recommended to improve data management and analysis. The inconsistency between SKU size suffixes and "SizeCategory" requires immediate attention to prevent errors in inventory and order fulfillment.
+
+Processing file: chunk_2.json
+
+--- SKU Pattern Analysis for chunk_2.json ---
+
+## SKU Pattern Investigation Report - Glass Awards & Art Glass
+
+**Date:** October 26, 2023
+
+**Subject:** Analysis of SKU patterns for Glass Award and Art Glass products.
+
+**Findings:**
+
+The SKUs appear to follow several patterns, with some exceptions. Here's a breakdown:
+
+**1. Common Prefixes and Their Meanings:**
+
+* **JGS:**  Likely represents "Jade Glass Standard." This prefix is used for a range of jade glass awards in various shapes and sizes.
+* **MGL:** Likely stands for "Metro Glass Large" or referencing something unique to those products. These SKUs are all jade glass awards with a silver and black piano finish base.
+* **PTG:** Possibly "Prestige Glass." This prefix designates jade glass awards with a rosewood piano finish base.
+* **GMR:**  Indicates "Glass Mirror." Used for the mirror glass plaques.
+* **SBG:**  Likely "Sport Ball Glass." This prefix is exclusive to glass sports balls with black marble bases.
+* **AGS:** Likely "Art Glass Series". Used for the art glass pieces in the Vases & Art Glass category.
+
+**2. Base Product Identifiers:**
+
+The SKU structure generally follows the format `PREFIX + NUMBER`. The number following the prefix often seems to group similar products, possibly by shape or style:
+
+* **JGS3x:** Diamond Shaped Jade Glass Awards.
+* **JGS4x:** Oval Jade Glass Awards.
+* **JGS5x:** Triangle Jade Glass Awards.
+* **JGS6x:** Rectangle Jade Glass Awards.
+* **MGL01x:** Round Metro Glass Awards.
+* **MGL02x:** Flame Metro Glass Awards.
+* **MGL03x:** Fan Metro Glass Awards.
+* **PTG5x:** Rectangle Prestige Glass Awards.
+* **PTG7x:** Diamond Prestige Glass Awards.
+* **GMR[Size]BK/C:** Mirror Glass Plaques (Size encoded within SKU).
+* **SBG10x:** Sport Ball Glass Awards.
+* **AGS0x - AGS1x:** Art Glass (Numerical ordering seems less systematic within the specific types)
+
+
+**3. Size and Color Variations:**
+
+* **JGS, PTG, MGL:**  The last digit of the SKU (1, 2, 3) generally corresponds to size (Small, Medium, Large), although the exact dimensions vary even within these categories.
+* **GMR:** Size is indicated directly within the SKU (e.g., 68, 79, 810, 912 for 6"x8", 7"x9", 8"x10", 9"x12").  Color is indicated by a suffix: BK for Black, C for Clear.
+* **SBG:** The numeric portion doesn't follow a clear pattern, possibly due to unique dimensions for each sport and size (football, basketball, soccer). Size variations are quite broad, requiring looking at the item description.
+* **AGS:** Size and color variations are NOT encoded in the SKU and must be obtained from the product details. Some have colors in their names, but the SKU doesn't reflect this.
+
+**4. Unique Numbering or Suffix Trends:**
+
+* **BK and C suffixes** are used in the GMR series to denote Black and Clear colors respectively.
+* **Numeric suffixes (1, 2, 3)** after the prefix and base identifier in JGS, PTG, and MGL series often denote size variants.
+* For the Mirror Glass products (GMR), the size is encoded within the SKU, making it directly readable.
+
+
+**5. Odd Exceptions to Typical SKU Rules:**
+
+* **PTG72 (Medium Jade Diamond Prestige Glass)** is missing from the data.  This breaks the expected size progression pattern observed with other similar product lines.
+* **MGL031 (Small Jade Fan Metro Glass)** has a typo in the size ("6 3/34\"" instead of likely "6 3/4\""). This should be corrected in the product data.
+* **SBG products:** Numerical part is less informative with regard to the size variants. There is no clear number relationship to small vs large. Likely because these items (football, basketball, soccer) are very unique. 
+* **AGS products:** Least systematized. This grouping seems to have sequentially assigned numbers without the same clear size encoding.
+
+
+**Conclusion:**
+
+The SKU system shows a degree of structure, primarily utilizing prefixes to categorize by material and style, and numerical suffixes to indicate size variants. However, several inconsistencies and exceptions exist, particularly within the `PTG`, `SBG`, and `AGS` product lines.  These irregularities may cause issues with inventory management or data analysis and should be addressed for improved consistency and clarity. Further investigation or information from the business about how these SKUs are generated may provide additional insight.
+
+Processing file: chunk_3.json
+
+--- SKU Pattern Analysis for chunk_3.json ---
+
+## SKU Pattern Investigation Report - Gifts & Promotionals: Key Chains, ID Holders, Bag Tags
+
+**Case:**  Analysis of SKU patterns for Gifts & Promotionals, specifically Key Chains, ID Holders, and Bag Tags.
+
+**Objective:**  Identify underlying logic and relationships within the provided SKU data.
+
+**Findings:**
+
+**1. Common Prefixes and Their Meanings:**
+
+* **GFT:**  This prefix appears in all SKUs and likely stands for "Gifts" representing the overarching product category.
+
+
+**2. Base Product Identifiers & Variations:**
+
+* **GFT233-GFT234:** Leatherette ID Holder Keychain.  Numerical difference (233, 234) seems to indicate color variation (Light Brown, Dark Brown).
+* **GFT2034:**  Purple Leatherette Golf Bag Tag with 3 Tees. Stands out as a unique product with no clear numerical relationship to other SKUs, possibly reflecting a distinct product line.
+* **GFT2150-GFT2163:** Leatherette Oval Metal Frame Keychain. Numerical sequence (2150-2163, excluding 2161) signifies color/material variations within the oval keychain type. The incrementing numbers (2150, 2151, 2152...) clearly represent color changes, such as Light Brown, Dark Brown, Black/Gold, etc.
+* **GFT2170-GFT2183:**  Leatherette Rectangle Metal Frame Keychain.  Similar to the oval keychains, the numerical sequence (2170-2183) reflects color variations within the rectangular keychain type.  Again, incrementing numbers indicate color differences (Light Brown, Dark Brown, Black/Gold, etc.).
+* **GFT2190-GFT2203:** Leatherette Round Metal Frame Keychain. Consistent with the oval and rectangular keychains, this numerical sequence (2190-2203) indicates color/material variations for round keychains.  The incrementing number pattern again relates to color (Light Brown, Dark Brown, Black/Gold, etc.)
+* **GFT2370-GFT2373:** Leatherette Oval Keychain (without metal frame, distinguished from GFT215x). The numerical sequence (2370-2373) appears to signify color/design (White, Purple, Football, Basketball). Note price difference for GFT2372 and GFT2373, likely due to the printed design.
+* **GFT2380-GFT2381:**  Leatherette Rectangle Keychain (without metal frame, distinguished from GFT217x).  The numerical sequence (2380 and 2381) indicates color variations (White and Purple).
+
+
+**3. Size and Color Variations:**
+
+* Size is embedded in the product "size" field, not the SKU.
+* Color variations are primarily handled by incremental SKU numbers within a product type. E.g., GFT2150 (Light Brown) to GFT2151 (Dark Brown).
+
+
+**4. Unique Numbering or Suffix Trends:**
+
+* The last two digits of the SKUs seem to be related to a base model and color/material variations, with the first digit often incrementing for a new shape.
+* GFT215x-GFT220x represent the core patterns, with GFT23x and GFT2034 as exceptions.
+
+
+
+**5. Odd Exceptions to Typical SKU Rules:**
+
+* **GFT2034:** Does not adhere to the numbering scheme of other keychain products. This might be a standalone product or from an older product line.
+* **Missing GFT2161:**  A gap in the numerical sequence of the oval keychains, requiring investigation.  Could be a discontinued product or a data entry error.
+* **GFT233 & GFT234:**  Shorter SKUs than the rest and could represent an earlier, less consistent system of SKU generation for the ID Holder keychains. They are similar to GFT2034 in this respect.
+
+**Conclusion:**
+
+The SKU system demonstrates a generally logical structure using `GFT` as a category prefix, followed by numbers relating to product type, shape, and color variations. However, some exceptions suggest potential inconsistencies or an evolving SKU system. Further investigation and potentially cross-referencing with older catalogs could reveal more about GFT2034 and the missing GFT2161. The shorter SKUs GFT233 and GFT234 also warrant some investigation. This analysis provides a strong foundation for understanding the SKU system and can aid in inventory management, product searches, and marketing analyses.
+
+Processing file: chunk_4.json
+
+--- SKU Pattern Analysis for chunk_4.json ---
+
+## SKU Pattern Investigation Report - Name Badges
+
+**Case:** Analysis of Name Badge product SKUs to identify underlying patterns and variations.
+
+**Data Source:** Provided JSON dataset.
+
+**Findings:**
+
+**1. Common Prefixes and Their Meanings:**
+
+* **BDG:**  Indicates "Badges with Frames" subcategory.
+* **PTH:** Indicates "Patches" subcategory.
+
+**2. Base Product Identifiers:**
+
+It appears the first three characters of the SKU (the prefix) define the product type, with the remaining digits differentiating variations within that type.  However, there isn't enough information to isolate a singular "base" identifier.  Further investigation with more data is recommended, particularly products with similar characteristics (shape, size, material) but different colors, to pinpoint the base SKU.
+
+**3. Size and Color Variations:**
+
+* **Badges with Frames (BDG):**
+    * Size is encoded within the numerical part of the SKU. 
+        * `BDG208` and `BDG210` are 3" x 1 1/2" and Oval.
+        * `BDG231` to `BDG240` are 3" x 1" and Round Corner.
+        * `BDG261` to `BDG270` are 3" x 1 1/2" and Round Corner.
+    * Color variations are not consistently encoded in the SKU. For example, multiple "Black" and "Pink" variations exist across different number ranges within the BDG prefix. Color is mostly captured in the product name. The exception is the BDG2xx series. The numeric portion appears to define the color and possibly the material.
+
+* **Patches (PTH):**
+    * Size variations are *not* clearly encoded in the SKU.  Most rectangle and hex patches are 3" x 2", but `PTH010` (Football) is 2 1/2" x 2 1/2". This suggests size might be categorized by the hundreds digit (0xx, 1xx).
+    * Color, similar to Badges, is primarily in the product name, with some encoded into the last digits (especially Black, Gold, Pink, Blue), but no consistent pattern is readily apparent. Shapes seem to be encoded into the numeric part of the SKU (PTH101-11x are rectangles, PTH131-14x are Hex shapes)
+
+**4. Unique Numbering or Suffix Trends:**
+
+* **Badges with Frames (BDG):**  The last digit of the SKU *sometimes* seems to relate to color/material. For example,  `BDG231`, `BDG261` are both "Light Brown,"  `BDG232` and `BDG262` are "Dark Brown." This needs more data to confirm.
+* **Patches (PTH):**  The hundreds digit *could* represent broad shape categories (0xx, 1xx) and within each, the tens and ones digits *might* relate to color/material variations (101, 131 are light brown, 102, 132 are rawhide, 103, 133 are black silver and so on). More data required to validate.
+
+**5. Odd Exceptions to Typical SKU Rules:**
+
+* `PTH010` stands out as a potential exception. It's a football patch with different dimensions than the other 1xx series patches and a different price than the rest of the Football Patches.  It might represent an older product or a special case.
+
+**Conclusions:**
+
+The SKU system demonstrates *some* logic related to product categorization (BDG, PTH), size (within BDG, perhaps within PTH), shape (within PTH), and color/material (inconsistent within both).  However, the patterns are not fully consistent or predictable based on this limited dataset.
+
+
+**Recommendations:**
+
+* **Gather more data:** A larger dataset including more variations (sizes, colors, materials, shapes, etc.) is crucial to solidify these observed patterns and potentially uncover new ones.
+* **Consult product documentation/developers:** Interviewing individuals involved in creating the SKUs would provide invaluable insight into the intended logic and any undocumented exceptions.
+* **Develop a more structured SKU system:**  Implementing a more hierarchical and predictable SKU system would greatly improve data analysis, inventory management, and other business processes. For instance, a system that explicitly encodes size, color, and material into separate sections of the SKU would eliminate ambiguity and enable more efficient searching and filtering. 
+
+Processing file: chunk_5.json
+
+--- SKU Pattern Analysis for chunk_5.json ---
+
+## SKU Pattern Investigation Report - Frames and Decor
+
+**Date:** October 27, 2023
+
+**Subject:** Analysis of SKU patterns for Frames and Decor products.
+
+**Findings:**
+
+The SKUs for the provided "Frames and Decor" product data reveal several discernible patterns, along with some inconsistencies.  The products appear to be primarily Leatherette items in various forms.
+
+**1. Common Prefixes and Their Meanings:**
+
+* **LDC:**  Likely stands for "Leatherette Decor/Signage,"  representing the 16x20 Wall Decor subcategory.
+* **CH:**  Likely signifies "Certificate Holder," specifically for the 8 1/2" x 11" size.
+* **LLP:** Represents "Leatherette Plaque," followed by numbers indicating color/material and size.
+* **GFT:** Appears to represent "Gift" or "Gift Item," specifically for Ornaments.
+
+**2. Base Product Identifiers:**
+
+* **LDC04:**  Base identifier for the 16x20 Wall Decor, followed by a sequential number (11-14) for color/style variations.
+* **CH1:** Base identifier for Certificate Holders, followed by sequential numbers (01-13) for color/style variations. *Exception*: CH108 follows CH105.  Numbers CH106 and CH107 are missing from the data.
+* **LLP:** The base identifier for Leatherette Plaques is followed by a number seemingly related to color/material (1 for Light Brown, 2 for Dark Brown, 3 for Black/Gold, 4 for Rawhide, 5 for Gray, 6 for Black/Silver).  This is then followed by size indicators: 79 (7"x9"), 810 (8"x10"), 912 (9"x12"), and 1013 (10 1/2" x 13").
+* **GFT10:**  Likely the base identifier for ornaments, specifically star-shaped ones. These are followed by sequential numbers (61-69) for color/style variations. GFT107 indicates oval ornaments.
+
+**3. Size and Color Variations:**
+
+* **LDC:** Size is consistent (16"x20"). Color/style variations are indicated by the last two digits of the SKU (11 - Rustic/Silver, 12 - Teal, 13 - Blue/Silver, 14 - Bamboo).
+* **CH:** Size is predominantly 8 1/2" x 11".  Color/style variations are represented by the numerical suffix (e.g., 101 - Light Brown, 102 - Dark Brown, 103 - Black/Gold, etc.).
+* **LLP:**  Size variations are clearly indicated within the SKU (79, 810, 912, 1013), as described above.  The initial digits after "LLP" appear to correspond to color/material variations.
+* **GFT:**  Ornaments have a primary size of 4"x4" (star shape) or 3" x 4 1/2" (oval shape). Color/style variations follow a similar pattern to other categories, using sequential numbering within the SKU.
+
+**4. Unique Numbering or Suffix Trends:**
+
+* Sequential numbering is a common trend for indicating color/style variations within each product group (LDC, CH, GFT).
+* The LLP SKUs utilize a combined approach: the first digit after "LLP" denotes color/material, and the following digits denote size.
+* The suffix "A" appears in the Black/Gold Leatherette Plaque SKUs (LLP3xxxA). This likely denotes a specific version or variation within the Black/Gold category but is not consistently applied across other color options.
+
+
+**5. Odd Exceptions to Typical SKU Rules:**
+
+* Missing CH SKUs: CH106 and CH107 are absent from the provided data, creating a gap in the otherwise sequential numbering.
+* CH108 following CH105:  This breaks the expected sequential order and requires further investigation to understand the reasoning.
+* Inconsistent "A" suffix for LLP: While the "A" suffix is used for Black/Gold plaques, it is not present for other color/material variants. This inconsistency might indicate an error or a specific attribute related only to the Black/Gold plaques that is not captured in the current data.
+* LLP679 is listed as 8x10 instead of 7x9.
+
+
+
+**Recommendations:**
+
+* Investigate the reasons behind the missing CH SKUs (CH106, CH107) and the sequencing anomaly with CH108.
+* Clarify the meaning and consistent application of the "A" suffix within the LLP SKUs.
+* Verify the size information for LLP679, as it conflicts with the established pattern.
+* Ensure consistent data entry for Color and Material, as "Not Specified" is frequently used. Implementing drop-down menus for these attributes would improve data quality.
+
+
+
+This report identifies significant patterns within the SKU data. Further investigation and clarification of the identified exceptions will enhance the accuracy and usefulness of the SKU system.
+
+Processing file: chunk_6.json
+
+--- SKU Pattern Analysis for chunk_6.json ---
+
+## SKU Pattern Investigation Report - Sports Medals
+
+**Case:** Decoding product variations within sports medal SKUs.
+
+**Data:**  A set of 51 product records containing name, price, SKU, size, category, subcategory, and color information.
+
+**Findings:**
+
+**1. Common Prefixes and Their Meanings:**
+
+The SKUs appear to use prefixes to denote the medal design/style:
+
+* **BL:** BriteLazer (e.g., BL209S, BL210B)
+* **GM:** Galaxy (e.g., GM104B, GM105G)
+* **HR:** High Relief (e.g., HR720B, HR725S)
+* **MS:** MidNite Star (e.g., MS704B, MS704S)
+* **SB:** Starbrite (e.g., SB155B, SB255S)
+* **SS:** Superstar (e.g., SS404B, SS404G)
+* **STM:** Millennium (e.g., STM1208B, STM1209S) – *Note the longer prefix.*
+* **ST:** Shooting Star (e.g., ST09B, ST59S)
+* **TS:** Ten Star (e.g., TS405B, TS406B)
+* **VM:** Victory Medal (e.g., VM104B, VM104S)
+* **3D:** 3-D Medal (e.g., 3D206B, 3D206G) 
+
+**2. Base Product Identifiers:**
+
+The portion of the SKU following the prefix likely represents the base product identifier, combining design and potentially size or another attribute. It's not always clear which numbers relate specifically to size. Examples:
+
+* `BL209` (BriteLazer, potentially related to 2" size)
+* `GM104` (Galaxy, potentially related to 2 1/4" size)
+* `HR720` (High Relief, potentially related to 2" size, but with '72' consistent for Football and Golf)
+* `STM1208` (Millennium, seemingly including "120" and a subcategory-related number '8' or '9')
+* `ST09` and `ST59` (Shooting Star - size variation clearly marked with '09' and '59' relating to 1 3/4" and 2 1/2" respectively).
+
+
+**3. Size and Color Variations:**
+
+* **Size:** Size variations are sometimes embedded within the base product identifier (e.g., ST09 vs. ST59) and other times not apparent (e.g., SB155, SB255 have different sizes but a nearly identical SKU base). The data provided indicates size variations (1 3/4", 2", 2 1/4", 2 1/2", 2 3/4"), but  the SKU logic for representing these isn't entirely consistent. 
+* **Color:** Color variations are consistently represented by a single-letter suffix at the end of the SKU:
+    * `B`: Bronze (or "Not Specified" color, assumed bronze)
+    * `G`: Gold
+    * `S`: Silver
+
+**4. Unique Numbering or Suffix Trends:**
+
+* The numbers immediately following the prefix in the base SKU (e.g., the "209" in BL209, the "104" in GM104) might indicate size or a product subgroup, but the pattern isn't entirely clear. More data is needed to decipher this.  This needs further investigation.
+* The Millennium medal SKUs (STM) have a more complex structure with seemingly sequential numbers based on the subcategory, but with a shared "120" element.
+
+**5. Odd Exceptions to Typical SKU Rules:**
+
+* The most notable exception is the "BL" prefix, which appears for both Football (BL209S) and Golf (BL210B). While the numerical part differs slightly, it might indicate a broader use of the "BriteLazer" designation not tied directly to the sport.  This warrants further investigation. It is a weak point in the SKU system.
+
+
+**Conclusion:**
+
+The SKU system generally follows a pattern of `Prefix + Base Identifier + Color`. However, there are inconsistencies in how size is represented, and the numerical components within the base identifier aren't fully understood.  Further data, including more product variations (perhaps different sports or sizes) and access to product catalogs or design documentation, would be crucial to definitively crack the code of these SKUs.  A review of pricing data in correlation with the SKU might also reveal patterns associated with production costs and materials.
+
+Processing file: chunk_7.json
+
+--- SKU Pattern Analysis for chunk_7.json ---
+
+## SKU Pattern Investigation Report - Medals & Completed Cup Trophies
+
+**Date:** October 26, 2023
+
+**Subject:** Analysis of product SKU data for pattern identification.
+
+**Findings:**
+
+**I. Medals:**
+
+* **Common Prefixes & Meanings:**
+    * `SB`:  Starbrite Medals
+    * `SS`: Superstar Medals
+    * `STM`: Millennium Medals
+    * `ST`: Shooting Star Medals
+    * `TS`: Ten Star Medals
+    * `3D`: 3-D Medals
+    These prefixes clearly identify the medal series/design.
+
+* **Base Product Identifiers:** The numbers following the prefix (e.g., `160`, `408`, `1215`, `22`, `72`, `417`, `216`) seem to represent a base product ID for a specific medal design within a series.  However, there's no immediately obvious pattern in how these numbers relate to size or other attributes. This requires further investigation with more data.
+
+* **Size and Color Variations:**
+    * Size is *not* consistently encoded in the SKU.  While the number after the prefix *might* relate to size in some cases (e.g., SB`160` vs SB`260`), it's not a reliable indicator.
+    * Color is indicated by a single-letter suffix:
+        * `G`: Gold
+        * `S`: Silver
+        * `B`: Bronze
+        Medals with no color suffix generally appear to be Bronze, though this isn't explicitly confirmed in the data. This represents an inconsistency in the SKU data.
+
+* **Unique Numbering/Suffix Trends:**  No discernible trends besides color coding.
+
+* **Odd Exceptions:** The `STM` (Millennium) prefix is an outlier, using alphanumeric characters and being longer than the other prefixes. It's possible that 'STM' itself is an abbreviation with meaning, and then the numbers following follow a different pattern.
+
+
+**II. Completed Cup Trophies:**
+
+* **Common Prefix & Meaning:**
+    * `CMC`: Completed Metal Cup
+
+* **Base Product Identifiers:** The three digits following the `CMC` prefix appear to encode both style and size.  Further breakdown:
+    * `CMC101`, `CMC102`, `CMC103`, `CMC104`: A series of increasingly larger cups, available in Gold (G) and Silver (S).
+    * `CMC151`, `CMC152`, `CMC153`, `CMC154`:  Another series of increasingly larger cups, but with a Gold/Silver finish.  Note that these lack the color suffix. This needs further investigation to determine if the "Gold" color designation is accurate.
+    * `CMC201`, `CMC202`, `CMC203`, `CMC204`, `CMC205`: A third series similar to the `101` series.
+    * `CMC281`, `CMC282`, `CMC283`:  A fourth series, also similar to the `101` series but without the largest sizes represented in the provided dataset.
+
+* **Size and Color Variations:**
+    * Size is *not* directly encoded in the SKU but is strongly correlated with the numerical portion after `CMC`. Each distinct number sequence seems to represent a different size progression.
+    * Color is designated by a single-letter suffix:
+        * `G`: Gold
+        * `S`: Silver
+    *  The `CMC15x` series introduces an exception:  "Gold/Silver" is stated in the name, but "Gold" is used in the color field and no color suffix is present in the SKU.
+
+
+* **Unique Numbering/Suffix Trends:** The first digit after `CMC` (1 or 2) might signify a broader cup style or perhaps material quality, as the shapes appear slightly different in the image links.
+
+* **Odd Exceptions:** The inconsistencies around the `CMC15x` series (Gold/Silver vs. Gold and the missing color suffix in the SKU) raise a flag.  This needs further clarification. Also, it is unclear why the number 15x was used.
+
+
+**III. Overall Conclusions:**
+
+The SKU system appears partially systematic but has inconsistencies and areas lacking clarity.  The use of prefixes for product lines is consistent.  However, the encoding of size information within the SKU varies between product types and needs further investigation, especially within the medal series. The `CMC15x` series and the Bronze medal color handling appear to be exceptions needing attention.
+
+
+**Recommendations:**
+
+* **Standardization:** Implement more consistent SKU logic across all product types, particularly with size encoding. A more standardized scheme would simplify inventory management and data analysis.
+* **Documentation:** Document the SKU logic clearly and thoroughly. This documentation should be readily accessible to all relevant personnel.
+* **Data Quality Check:** Audit product data to ensure consistency between name, color description, and SKU coding, specifically for the exceptions identified in this report.
+* **Further Investigation:** Gather more data, especially for medals, to understand the numerical portion after the prefixes. This may allow us to decipher its meaning and identify any size or other attribute coding hidden within it.
+
+
+
+This report provides a preliminary analysis. Further investigation and data gathering are required to gain a more complete understanding of the SKU system and uncover any additional hidden patterns.
+
+Processing file: chunk_8.json
+
+--- SKU Pattern Analysis for chunk_8.json ---
+
+## SKU Pattern Investigation Report - Wood Plaques
+
+**Case:** Wood Plaque SKU Deconstruction
+
+**Date:** October 26, 2023
+
+**Findings:**
+
+The SKUs for the wood plaques follow several discernible patterns, with a few notable exceptions.  The majority of SKUs appear to encode product attributes like material, finish/color, and size.
+
+**1. Common Prefixes and Their Meanings:**
+
+* **FP:**  "Floating Plaque". This prefix is further divided:
+    * **FPA:** Floating Plaque, Acrylic material.
+    * **FPG:** Floating Plaque, Glass material (though "Material" field often inaccurately lists "Not Specified").
+* **GA:** "Genuine Alder".  Further divided into:
+    * **GAP:** Genuine Alder Plus.
+    * **GRA:** Genuine Red Alder.
+* **GWE:** "Genuine Walnut Elliptical Edge" (Round Corner implied)
+* **GWS:** "Genuine Walnut Step Edge"
+* **PNG:**  "Premium Rosewood Piano Finish"  (Meaning of 'PNG' unclear, likely related to material/finish)
+* **PSH:** Potentially "Piano finish SHield" or related to shield/cross shape - requires further confirmation. This appears to be a less structured SKU system.
+* **WLP:** "Wood Log Plaque" –  Specifically for Elmwood.
+* **8C:**  This prefix deviates significantly from the others. Appears to denote plaques with colored woodgrain and plates. Requires more data points to confirm its precise meaning.
+
+
+**2. Base Product Identifiers:**
+
+The base identifier appears to be the prefix described above, indicating the general product type and material. For instance, "FPA" for floating acrylic plaques or "GRA" for genuine red alder plaques.
+
+**3. Size and Color Variations:**
+
+* **Size:** Size is often encoded in the final digits of the SKU. 
+    * For rectangular plaques, the digits correspond directly to the dimensions (e.g., 810 for 8"x10", 912 for 9"x12", 1013 for 10 1/2"x13",  68 for 6"x8", 79 for 7"x9").
+    * For round/other shapes, the pattern is less consistent (e.g., PSH10, PSH11, PSH20, PSH22, PSH24, WLP07, WLP09).  These likely represent size categories rather than precise dimensions.  GWER uses dimensions with trailing zeroes, potentially indicating further variation within size (material thickness?).
+* **Color:** Color variations are indicated either within the prefix (as in 8C series, where 8C1001*B* might indicate Black and 8C1002*B* blue) or through a distinct prefix in the case of "Floating Plaques" with Rosewood (uncolored) or Black color variations (FPA vs. FPA2 for Black).
+
+**4. Unique Numbering or Suffix Trends:**
+
+* The "GWER" prefix uses a trailing zero in the size part of the SKU (GWER68*00*, GWER79*00*, GWER810*0*, GWER912*0*).  The purpose of this zero is unclear and needs further investigation.  It's possible it's a placeholder for future variations or related to material thickness.
+
+**5. Odd Exceptions to Typical SKU Rules:**
+
+* **FPA21113 and FPG11113, FPG21113:**  These SKUs for the large 10 1/2" x 13"  plaques have an inconsistent "21113" or "11113" size code instead of the expected "1013" pattern.
+* **PSH Series:** This series deviates significantly. PSH10 and PSH11 are shield plaques, but PSH20, PSH22, and PSH24 are Maltese Cross Plaques, making the "2" prefix within this series unclear. The size encoding also doesn't follow a clear pattern.
+* **8C Series:** This series has a distinct prefix and alphanumeric suffix (B, C, D) for size, differing from the numeric size encoding of other SKUs. It also seems to incorporate color information earlier in the SKU (e.g., 8C100*1*B, 8C100*2*B,  8C100*4*B). Further investigation is needed to understand "100" meaning. It could be a material code.
+* **Material Inconsistency:** In several cases, the "Material" field says "Not Specified" even when the SKU clearly suggests a material (like FPG indicating glass).  This data discrepancy should be corrected for accuracy.
+
+
+**Recommendations:**
+
+* Standardize SKU structure for improved clarity and data management. The PSH series, in particular, requires a review.  Consistent sizing conventions should be employed across all product lines.
+* Clarify the meaning of trailing zeros in GWER SKUs and the numbering system for the 8C and PSH series.
+* Investigate and correct inconsistencies in product data fields, particularly the "Material" field.  Ensure data accuracy between the SKU and descriptive attributes.
+
+
+This investigation has revealed significant patterns within the wood plaque SKUs, allowing for better understanding of the product coding system.  However, further investigation is required to address the highlighted inconsistencies and fully decipher some of the more complex coding structures.
+
+Processing file: chunk_9.json
+
+--- SKU Pattern Analysis for chunk_9.json ---
+
+## SKU Pattern Investigation Report - Acrylic Awards
+
+**Case:** Analysis of SKU patterns for Acrylic Awards.
+
+**Objective:** Uncover hidden patterns related to size, color, and categorization within the provided SKU data.
+
+**Findings:**
+
+**1. Common Prefixes and Their Meanings:**
+
+* **IMP:**  Likely stands for "Impress Acrylic," indicating a product line or specific design within the acrylic awards. These seem to further categorize by shape (Star, Oval, Flame) within the product line.
+* **LST:** Likely stands for "Luminary Premier Acrylic" another distinct product line.
+* **MAC:**  Likely stands for "Magnetic Acrylic," identifying awards with magnetic features.
+* **MAQ:** Likely represents "Marquis Acrylic."
+* **MR:** Likely stands for "Mirage Acrylic."
+
+**2. Base Product Identifiers:**
+
+* **IMP** followed by 3 digits: The first digit after "IMP" *could* indicate shape series (6 for Oval, 7 for Star, 9 for Flame), but more data would be needed to confirm. The following two digits probably relate to size (01 being smallest, 02 medium, 03 large, etc.).  However, IMP602S is 8 3/4" while IMP701S is 7", this part of the numbering isn't solely based on a consistent size progression. It's likely a size *category* progression within each shape.
+* **LST** followed by 2 digits and color code: The first digit after "LST" corresponds to size (5", 6", 7").  The remaining characters are color codes (BKB - Black & Blue, BKC - Black & Clear, BKG - Black & Gold, BU - Clear & Blue, GD - Clear & Gold). Note this series includes combination colors.
+* **MAC** followed by 3 digits: The digits after MAC indicate increasing size (401 small, 402 medium, 403 large).
+* **MAQ** followed by 2 digits, and color code: The digits after "MAQ" seemingly represent size, using combined width and height in inches (68 for 6"x8", 79 for 7"x9"). This is then followed by a color code (BU-Blue, GD-Gold, RD-Red/Not specified)
+* **MR** followed by 2 digits and color code: The digits after "MR" seem to indicate size categories within the Mirage range, but the sizes don't perfectly line up (31: 3.5" x 5" or 3.5" x 7"; 32: 4.25 x 6"; 33: 5" x 7"), so it might be a categorical rather than strict dimensional system. The color coding system appears less consistent here.  
+
+**3. Size and Color Variations:**
+
+* **IMP:** Sizes are represented within the numerical portion of the SKU, but the system is not strictly tied to inches. Color is typically represented by a single letter suffix (S-Silver, G-Gold, BU-Blue).
+* **LST:** Sizes are indicated by the first digit after "LST," and colors with a two- or three-letter code (BKB, BKC, BKG, BU, GD).
+* **MAC:** Sizes are in sequential numerical order (401, 402, 403). Color is implicitly "Clear" and not explicitly present in the SKU.
+* **MAQ:** Sizes indicated by two digits within the SKU, representing combined dimensions. Single or two-letter codes are used for color (BU, GD, RD).
+* **MR:** The SKU's two-digit sequence corresponds with general size categories. Color variations are indicated by suffixes (BU-Blue, G-Gold, GN-Green/Not specified, RD-Red/Not specified).
+
+
+**4. Unique Numbering or Suffix Trends:**
+
+* Color codes are primarily suffixes.
+* The "LST" series uses combined color codes.
+* "MAC" SKUs don't explicitly denote color.
+
+**5. Odd Exceptions to Typical SKU Rules:**
+
+* **IMP602S** uses a '6' series while being an 'oval' product, and the sizing number compared to other IMP series don't seem to match up. More data would be necessary to verify its true categorization.
+* The "MR" series's sizing and color variations are less consistent and predictable than others, indicating possibly a less organized cataloging system or rapid additions/changes.
+* Inconsistent use of "Not Specified" for color in products labeled Red or Green (e.g., Red Marquis, Green Mirage).  This could indicate a data entry issue or the products might genuinely be indeterminate in color.
+
+
+**Conclusion:**
+
+While the SKUs demonstrate some logical structure around product lines, size, and color, there are inconsistencies, especially within the "IMP," and "MR" series.  A more comprehensive dataset, perhaps including product descriptions or internal catalog information, would be beneficial to fully decipher the logic and address the identified exceptions.  The current SKU system might benefit from standardization to improve clarity and searchability.
+
+Processing file: chunk_10.json
+
+--- SKU Pattern Analysis for chunk_10.json ---
+
+## SKU Pattern Investigation Report - Office Accessories
+
+**Date:** October 26, 2023
+
+**Subject:** Analysis of SKU patterns for Office Accessories, specifically Pens/Cases and Desk Wedges.
+
+**Findings:**
+
+**I. Pens/Cases:**
+
+* **Prefix "LP":**  This prefix appears to designate "Leatherette Pen" or simply "Pen," as it's used consistently for this subcategory.
+
+* **Numeric Sequencing:**  The numbers following "LP" generally increase sequentially, suggesting product introduction order or a simple numbering system.  There are distinct number ranges (452-466, 501-504, 801-836, 861-867) likely representing different pen styles or product lines.
+
+* **Suffix "A":** The suffix "A" appears on SKUs LP501A, LP502A, and LP504A. These are all ballpoint pens with gripper and gold trim, and share the same size. This suggests "A" might denote a specific feature or trim variation within the 500 series.
+
+* **Color Variations:** While the 'Color' field is often "Not Specified," the SKU numbering doesn't seem to directly encode color information. Color variations are usually reflected in the product name itself.  However, in some series (e.g., LP801-LP805, LP821-LP825), sequential SKUs correspond to different colors, suggesting a color-coding convention within those specific product lines.
+
+* **Size Variations:** Size is inconsistently recorded, sometimes using inches (e.g., 5 5/16") and sometimes with additional dimensions (e.g., 5 1/2" x 1/2"). The SKU doesn't encode size information directly; it's captured separately. Sizes are relatively similar across the "LP" prefixed products.
+
+* **Material and Features:** These fields are predominantly null and provide no insight into SKU patterns.
+
+**II. Desk Wedges:**
+
+* **Prefix "ADW":** This prefix likely stands for "Acrylic Desk Wedge." The following numbers correspond to the wedge size in inches (e.g., ADW10BK for a 10" wedge, ADW8BK for an 8" wedge).
+
+* **Suffix "BK" and "CL":** These suffixes clearly represent color variations: "BK" for Black and "CL" for Clear.
+
+* **Prefix "DS":** This prefix most likely stands for "Desk Stand" or "Desk Set." The following number usually indicates the length/size (e.g., DS10, DS12, DS8).  DS4B and DS5B likely indicate 4" and 5" Beechwood holders, with DS4W and DS5W indicating their Walnut counterparts.
+
+* **Prefix "CRY":** This seems to denote a "Crystal" material, as seen in CRY3611S. The meaning of the following digits (3611S) is unclear without further information.
+
+* **Size Variations:** Sizes are expressed in inches, and sometimes include multiple dimensions.  As with pens, size is not embedded in the SKU systematically, except for the ADW series.
+
+**III. General Observations:**
+
+* **Lack of Unified System:** The SKU system lacks a completely unified structure across all office accessories. Different prefixes and suffix conventions exist within each subcategory, suggesting independent numbering systems.
+
+* **Data Inconsistency:**  The "Color," "Shape," "Material," and "Features" fields are often "Not Specified" or null. This limits the ability to identify further patterns based on these attributes.
+
+* **Potential for Improvement:** A more structured SKU system could improve inventory management and data analysis.  Consistent use of prefixes/suffixes for color, size, and material across all subcategories would be beneficial.
+
+
+**Recommendations:**
+
+* Further investigation into product catalogs and internal documentation might reveal the meaning of less obvious SKU components.
+* Implementing a more structured and consistent SKU naming convention would be highly beneficial for data analysis, inventory management, and potentially website filtering and search capabilities.
+* Populating missing data in fields like "Color," "Material," and "Features" would enrich the data and allow for more detailed analysis. 
+
+Processing file: chunk_11.json
+
+--- SKU Pattern Analysis for chunk_11.json ---
+
+## SKU Pattern Investigation Report - Drinkware
+
+**Date:** October 26, 2023
+
+**Subject:** Analysis of Drinkware SKU Data
+
+**Introduction:**
+
+This report details the findings of an investigation into the SKU patterns of drinkware products. The primary goal was to identify patterns related to prefixes, base identifiers, size/color variations, and any anomalies within the provided dataset.
+
+**Findings:**
+
+**1. Prefix Analysis:**
+
+* **SST:** Likely stands for "Silicone Straw Tumbler." Observed in SKUs for silicone straws (SST256, SST257).  The numerical portion likely indicates color variations.
+* **GFT:** Likely indicates "Gift" items, specifically related to wine accessories like wine bags (GFT217, GFT256A, GFT277, GFT399, GFT617, GFT716, GFT781, GFT812). The numerical portion doesn't appear to follow a strict pattern, potentially indicating a less structured system for these items.
+* **WBX:**  Appears to signify "Wine BoX" or "Wine Box with tools," referencing wine presentation boxes (WBX01, WBX02, WBX11, WBX12, WBX21, WBX31, WBX41, WBX51, WBX71, WBX72, WBX73A, WBX74, WBX75, WBX79). The following digits seem to categorize box type and material/finish.  The "7" series seems dedicated to leatherette single wine boxes, with trailing digits indicating color variations.
+* **WTL:**  Suggests "Wine Tool" or "Wine tooL set," representing wine tool sets (WTL02, WTL03, WTL05, WTL06, WTL07, WTL31, WTL32, WTL33A, WTL34, WTL35, WTL39, WTL40). Similar to WBX,  numerical patterns seem to categorize the tool set type and material. The "3" series is for 3-piece wine tool sets with different leatherette colors/finishes.
+* **LCM:** Stands for "Lidded Coffee Mug" from Polar Camel (LCM101, LCM102,... LCM114). The numerical portion following “LCM10” corresponds to color variations of 15oz Polar Camel mugs.
+
+
+**2. Base Product Identifiers:**
+
+* For wine bags (GFT), the base identifier seems to be the GFT prefix itself, with subsequent numbers likely arbitrary assignments.
+* Wine presentation boxes (WBX) use WBX followed by a two-digit number to define the base product (e.g., single vs. double, Rosewood finish vs. Matte Black finish), and then potentially a letter to indicate color variants.
+* Wine tool sets (WTL) also use the WTL prefix and two digits; the second digit seems to cluster items with similar materials/number of tools.
+* For coffee mugs (LCM), LCM plus the first two digits (e.g., LCM10 for 15 oz with slider lid) defines the base product, with the last digit identifying the color.
+* Silicone Straws (SST) appear to have a two-digit base, SST25, representing the material and dimension, with the last digit indicating color.
+
+**3. Size and Color Variations:**
+
+* Size variations are inconsistently recorded in the "size" field, with little relation to the SKU.
+* Color variations are sometimes reflected in the last digit of the SKU (e.g., SST256 - Red, SST257 - Yellow; LCM series).  For other product lines, like wine accessories, the color might be indicated by an appended letter (GFT256A) or seemingly random numbers within the SKU (GFT series). The data is inconsistent in correctly indicating color, with some color variants lacking "Color" field information.
+
+**4. Unique Numbering or Suffix Trends:**
+
+* Wine boxes (WBX) demonstrate a numbering system that seems to categorize box style and material. WBX01/WBX02 are rosewood *piano* finish boxes, single and double respectively.  WBX11/WBX12 appear to be a standard rosewood finish, with different dimensions. The "70" series within the WBX prefix is indicative of single wine boxes made of leatherette, and the last digit/letter indicates the color or finish. 
+* Wine Tool Sets (WTL) exhibit a similar pattern where the tens digit (e.g., 3 in WTL31, WTL32...) clusters products by the number of tools included and material. The last digit/letter identifies color variations.
+
+**5. Odd Exceptions to Typical SKU Rules:**
+
+* The use of "A" as a suffix (GFT256A, WBX73A, WTL33A) suggests color or finish variations, but this isn't consistent across all SKUs or even within the same product type, as other color variations don't have the suffix. These exceptions are mostly among wine accessories.
+* Inconsistent application of color designation across items. For example, LCM series mugs consistently describe color, while GFT items frequently lack color designations even when the product name implies a color ("Pink Leatherette Wine Bag").
+
+
+**Conclusion:**
+
+While some clear patterns emerge within the SKU data related to product categories and subcategories (prefixes WBX, WTL, GFT, SST, LCM), inconsistencies in representing size and color variations make it difficult to definitively decode all SKU elements.  Standardizing SKU construction, ensuring data accuracy in fields like “Color,” and implementing a more systematic numbering system for variations within product lines would greatly improve data management and analysis. 
+
+Processing file: chunk_12.json
+
+--- SKU Pattern Analysis for chunk_12.json ---
+
+## SKU Pattern Investigation Report - Product Identifiers
+
+**Case:** Decoding product variations within SKU data.
+
+**Data Source:** Provided JSON dataset.
+
+**Findings:**
+
+**1. Common Prefixes and Their Meanings:**
+
+* **LTM:** Likely stands for "Polar Camel Tumbler/Travel Mug" (based on product names).  A sub-pattern emerges within this prefix:
+    * **LTM72xx:**  Indicates 20 oz. ION-Plated Ringneck Tumblers.
+    * **LTM74xx:** Indicates 40 oz. ION-Plated Travel Mugs.  Further variations within:
+        * **LTM743x:** 40 oz. travel mugs with straw.
+        * **LTM747x:** 40 oz. travel mugs with handle and straw.
+        * **LTM748x:** 40 oz. travel mugs with straw (similar to 743x, suggesting a potential categorization difference not reflected in the data, perhaps lid type or material).
+    * **LTM8xx:** Indicates 12 oz. ION-Plated Stemless Wine Tumblers with Lid.  The last two digits likely encode color variations following a pattern described below.
+* **LWB:** Likely refers to "Polar Camel Water Bottle". The following digits indicate size and color, following a similar pattern to LTM8xx.
+* **APF:** Represents "Aluminum Photo Frame". The numbers indicate size, and the suffix represents color (B for Black, GY for Gray).
+* **LLF:** Represents "Leatherette Photo Frame".  The numbers following denote style/color and size.  LLF1xxx implies color/style 1 in the Leatherette frame line, LLF12xx color/style 2, and so on.  Then size is appended: 46 for 4x6, 57 for 5x7, 810 for 8x10.  A notable exception is LLF146 which omits the second '0' for the '4x6' sizing, compared to other sizes. 
+
+**2. Base Product Identifiers:**
+
+It's difficult to definitively isolate a "base SKU" without more data. However, the prefixes (LTM, LWB, APF, LLF) strongly suggest product family groupings. The digits following the prefix often encode size/capacity, with further digits or suffixes for color/style variations.  For example, LTM72, LTM74, LTM8, LWB2, APF4, LLF1, LLF12, LLF13, LLF14, and LLF15 could be considered family identifiers.
+
+**3. Size and Color Variations:**
+
+* **Drinkware (LTM/LWB):**  Size is typically part of the initial digits following the prefix (e.g., LTM72**9**x for 20oz, LTM74**3**x for 40oz, LWB**23**x for 32oz). Color is encoded either in the final digits (LTM72**91** – White/Rose Gold, LTM72**95** – Black/Prism) or through a tens-digit increment (LWB**23**0 - Black/Ghost Black, LWB**24**0 - Black/Rose Gold, LWB**25**0 - Black/Prism).
+* **Photo Frames (APF/LLF):** Size is indicated by the digits following "APF" (446, 457, 4810) or within the LLF code (LLF1xxx**46**, LLF1xxx**57**, LLF1xxx**810**).  Color is encoded through a single letter suffix in APF (B, GY) and the first 2-3 digits after the prefix for the LLF series.
+
+**4. Unique Numbering or Suffix Trends:**
+
+* Increments of 1 in the last digit (e.g., LTM743**0**, LTM743**1**, LTM743**2**) often indicate minor color/style variations within the same size and product type.
+* Tens-digit increments (e.g., LWB2**3**x, LWB2**4**x, LWB2**5**x)  indicate color or finish changes on Polar Camel water bottles.
+*  APF uses direct color abbreviations (B, GY) as suffixes.
+*  LLF uses numerical prefixes to encode color/style variations.
+
+**5. Odd Exceptions to Typical SKU Rules:**
+
+*  **LTM870, LTM880, LTM890** series:  These are all 12oz wine tumblers. The jump from 87x to 88x and 89x likely reflects a significant shift in color/finish, rather than the more granular change indicated by single-digit increments. However the data provided doesn't give further details on this difference.
+*  **LLF146** (Light Brown 4x6 Leatherette Frame):  This SKU lacks the extra "0" in the size encoding compared to other sizes (e.g., LLF1457, LLF14810) for consistent encoding of 4x6 = 46, 5x7 = 57, 8x10 = 810. This is an inconsistency that should be investigated. If other LLF14x SKUs exist, it could indicate a separate encoding schema for light brown variants.
+* **Color Discrepancies:** The "Color" field in the JSON data isn't always consistent with the product names or apparent SKU patterns. Some products listed as "Black" in the "Color" field have "White," "Warm Sand," or "Blush" in the name and SKU doesn't seem to distinguish that difference.  Further investigation is needed to determine the accurate representation of color within both the data and SKUs.  This could suggest the SKU system tracks base color (Black) while the name highlights accent colors or other material features.
+
+**Conclusion:**
+
+The SKUs generally adhere to a logical structure, reflecting product family, size, and color/style.  However, certain inconsistencies and exceptions warrant further investigation to fully understand the encoding logic.  A more comprehensive dataset, ideally including the full product catalog, and information regarding SKU assignment rules would significantly aid in uncovering more detailed patterns and resolving the identified discrepancies.  Specifically, a lookup table or document describing the meaning of each numerical group within the SKU prefixes would be highly beneficial.
+
+Processing file: chunk_13.json
+
+--- SKU Pattern Analysis for chunk_13.json ---
+
+## SKU Pattern Investigation Report - Gifts & Promotional Items
+
+**Case:** Analysis of SKU patterns for Gifts & Promotional product data.
+
+**Date:** October 26, 2023
+
+**Findings:**
+
+**1. Common Prefixes and Their Meanings:**
+
+* **GFT:**  The dominant prefix, highly likely indicating "Gift."  This prefix appears across multiple subcategories within "Gifts & Promotional," including Luggage Bag Tags, Phone Wallets & Holders, and Wallets/Money Clips.
+* **8C:** This prefix appears only twice, both times associated with "Nuckees Tablet/Phone Holder." This suggests a different vendor or product line distinct from the "GFT" items.  Further investigation is needed to confirm the meaning of "8C."
+
+**2. Base Product Identifiers:**
+
+The numerical portion following the prefix likely serves as the base product identifier.  Examples:
+
+* **GFT991, GFT992, GFT993:**  Represent variations of Leatherette Luggage Tags. The incrementing numbers suggest different designs (football, basketball, etc.).
+* **GFT1121 - GFT1132:** This range designates Cell Phone Wallets with Rings. The sequential numbering likely indicates color or material variations within this product group.
+* **GFT183, GFT184:**  Likely represent a base model of Hard Business Card Holder, differentiated by color (light brown, dark brown). Similar patterns are observed with GFT235/GFT236, indicating the use of sequential numbers for color variations within a specific product type.
+* **GFT520 - GFT529:** This series represents Laserable Leatherette Phone Wallets, with variations likely for color or finish as indicated by the incrementing numbers.
+
+**3. Size and Color Variations:**
+
+* **Size:** Size variations are not consistently encoded within the SKUs.  The "size" field in the data provides the dimensions, but this information is not reflected in the SKU structure itself.  Exception: Products labelled "(Extra Small)" in the name sometimes correlate with "Small" in the "SizeCategory" field but don't have unique size identifiers in the SKUs.
+* **Color:** Color variations are sometimes reflected in the SKU by slight variations in the numeric part of the SKU.  More often, however, color is only described in the product "Name" field.  Occasionally, this translates to the product's "Color" field in the data.  There is no systematic encoding of color in the SKU structure.
+
+**4. Unique Numbering or Suffix Trends:**
+
+* **Suffix "A":**  Observed in SKUs like GFT245A, GFT259A, and GFT522A. This "A" suffix likely denotes a specific feature or variation of the base product (e.g., Black/Gold color combination).  The "A" suffix items seem related to colors involving "Gold," but this is not a strict rule (e.g., GFT259A is Black, not Black/Gold).  More data would be needed to confirm the precise meaning of the "A" suffix.
+* **Three-digit versus Four-digit GFT SKUs:** Three-digit GFT SKUs appear to relate to older or distinct product lines (e.g., luggage tags, early business card holders/easels), while four-digit SKUs are more prevalent for newer items like the cell phone wallets and more recent business card holders. This may indicate a shift in SKU conventions over time.
+
+**5. Odd Exceptions to Typical SKU Rules:**
+
+* **8C14201 and 8C14202:**  These SKUs deviate significantly from the "GFT" pattern.  As noted earlier, they likely belong to a different product line or vendor ("Nuckees"). These SKUs also have different size information while sharing the same product name, a point requiring further investigation.
+
+
+**Conclusion:**
+
+The SKU system primarily uses the "GFT" prefix to indicate "Gift" followed by a numerical identifier that distinguishes product types and, sometimes, variations like color.  The system isn't entirely consistent, particularly regarding size and color encoding.  The "A" suffix and the "8C" prefix warrant additional investigation to fully understand their significance.  A more robust SKU system incorporating size and color directly into the identifier would enhance product management and analysis.
+
+Processing file: chunk_14.json
+
+--- SKU Pattern Analysis for chunk_14.json ---
+
+## SKU Pattern Investigation Report
+
+**Subject:** Acrylic Luminary Products
+
+**Date:** October 26, 2023
+
+**Case Summary:** Analysis of provided product data reveals distinct patterns within the SKUs, suggesting a structured system for product identification. However, certain inconsistencies and exceptions warrant further investigation.
+
+**Findings:**
+
+**1. Common Prefixes and Their Meanings:**
+
+* **LCR:**  Luminary Circle Round (possibly redundant 'Round' here)
+* **LOV:** Luminary Oval
+* **LSU:** Luminary Surge
+* **ACR:** Acrylic Round
+* **VPA:** Vapor Acrylic (Shape and size encoded in the suffixes)
+* **HAL:** Halo Acrylic (Shape and size encoded in the suffixes)
+* **LNA:** Lunar Acrylic (Size encoded in the suffixes)
+* **ARR:** Aurora Acrylic (Size encoded in the suffixes)
+* **OCT:** Octagon Acrylic
+* **MAQ:** Marquis Acrylic (Size encoded in the suffixes)
+* **SAS:** Self Standing Acrylic Shape (Shape and size encoded in the suffixes—though "Shape" appears redundant).
+* **SNB:** Sunburst Acrylic
+* **BAC:**  Basic Acrylic Clear (Shape and size encoded in the suffixes)
+
+**2. Base Product Identifiers:**
+
+The base identifier generally consists of the prefix (indicating shape and sometimes a specific feature like "Luminary" or "Vapor") followed by a number or a combination of a number and letters.  This core identifier seems tied to the specific product design, before size or color variations are applied.  Examples:
+
+* `LCR6` (Large Luminary Circle)
+* `LOV` (Luminary Oval)
+* `ACR4` (Acrylic Round, size related to the '4')
+* `VPA12` (Vapor Acrylic Arch)
+* `HAL30` (Halo Acrylic Fan)
+
+**3. Size and Color Variations:**
+
+* **Size:** Size variations are frequently encoded as a single digit following the base identifier (e.g., `ACR4`, `ACR5`, `ACR6`).  In some cases, the numeric value appears directly correlated to inches (e.g.  LOV7 = 7", LOV8 = 8"). In other instances, the numbers represent relative sizes within a product line (e.g. 1, 2, 3 for Small, Medium, Large).  Yet other products use two digits after the prefix to signify dimensions (e.g., MAQ68, MAQ79).
+* **Color:** Color is often represented by a two or three-letter suffix (e.g., `BKG` for Black/Gold, `BU` for Blue, `BM` for Blue Marble, `BUR` for Burgundy, `GD` for Gold).
+
+
+**4. Unique Numbering/Suffix Trends:**
+
+* The numeric part of the base identifier often (but not always) increments for larger sizes within the same product line (e.g., ACR4, ACR5, ACR6; BAC011, BAC012, BAC013).
+*  HAL, VPA, LNA products use three-digit numeric codes where the last digit seems to correlate with size (HAL20*1*BU Small vs. HAL20*2*BU Large). VPA1*0*1 is 5”, VPA1*0*2 is 6”, etc.
+* The "Luminary" products (LCR, LOV, LSU) all have BKG (Black/Gold) as the color suffix.  This may suggest that Luminary is closely associated with, or even synonymous with, the Black/Gold color scheme.
+
+**5. Odd Exceptions to Typical SKU Rules:**
+
+* **LCR6BKG:** This SKU uses a "6" before the color, while similar shape products use a "4," "5," or "7" seemingly related to size. The "6" here corresponds to the size “Large” but doesn’t seem to follow the numeric inch pattern.
+* **VPA121, VPA122, VPA101, VPA102, VPA111, VPA112:** The Vapor Acrylic products have less predictable number patterns. While the last digit appears to denote size (1 for Small, 2 for Large), the middle digit seems to encode shape information (0 for Round, 1 for Wave, 2 for Arch).  This is different from how shape is encoded in other SKUs.
+* Some products, like the Burgandy Sunburst, don't have a color indicated in their "Color" attribute, but the SKU uses "BUR" implying Burgundy. This suggests a potential data entry error or inconsistent handling of color information.
+
+**Conclusions:**
+
+The SKU system generally follows a logical structure with prefixes for product type and suffixes for color and sometimes size.  However, the system is not perfectly consistent.  Variations in the numeric codes and how they relate to size, coupled with the "VPA" exceptions, indicate possible evolution or layering within the SKU system over time.  Further investigation and clarification with those responsible for SKU assignment would be beneficial to fully understand the logic and address inconsistencies.
+
+
+**Recommendations:**
+
+* **Standardize size representation:** Establish a uniform system for representing sizes, either using direct inch/dimension values or a consistent numeric scaling system.
+* **Clarify "VPA" SKU logic:** Determine the exact meaning of the numeric codes used for Vapor Acrylic products.
+* **Audit SKU data:** Review the entire product catalog to identify and correct any other inconsistencies or exceptions.
+* **Document SKU conventions:** Create clear documentation outlining the rules and logic behind SKU creation for future reference and training.
+
+
+This concludes the preliminary report. Further investigation may be required based on these findings.
+
+Processing file: chunk_15.json
+
+--- SKU Pattern Analysis for chunk_15.json ---
+
+## SKU Pattern Investigation Report - Acrylics with Bases
+
+**Case:** Analyzing SKU patterns for Acrylic products with Bases.
+
+**Date:** October 26, 2023
+
+**Findings:**
+
+**1. Common Prefixes and Their Meanings:**
+
+* **IMP:** This prefix appears to represent the "Impress Acrylic" product line.  It's the most common prefix and is used for a wide variety of shapes, sizes, and styles within the "Acrylics with Bases" category, specifically "Tower & Diamond-With Base" subcategory.
+* **RIC:** This prefix likely stands for "Reflection Ice Top Acrylic".  All SKUs with this prefix belong to the "Tower & Diamond-With Base" sub-category and follow a numeric size designation.
+* **ROP:** This prefix likely stands for "Reflection Optima Acrylic", similar to RIC in category, subcategory and SKU structure.
+* **RBP:**  This prefix likely stands for "Reflection Peak Acrylic," sharing the same pattern as RIC and ROP.
+* **RSL:** This prefix likely stands for "Reflection Sail Acrylic," differing from the previous "Reflection" series primarily in the numeric portion of the SKU relating to size.
+* **PMA:** This prefix likely stands for "Premium Marble Arch Acrylic". These have a longer, more complex SKU structure.
+* **MBL:** This prefix appears to denote "Marbleized Acrylic Award".
+* **CIA:**  This prefix probably signifies "Cracked Ice Acrylic". The numeric suffix seems to correlate with size.
+* **WTR:** This prefix likely stands for "Waterfall Acrylic". The numeric suffix appears to relate to size.
+
+
+**2. Base Product Identifiers:**
+
+The base identifier appears to be the prefix (e.g., IMP, RIC, ROP, RBP, RSL, PMA, MBL, CIA, WTR) combined with a numeric code. This numeric code *sometimes* appears to group products of similar style or shape (e.g., IMP14x for clipped corners, IMP30x for Diamond shape).  However, there are also instances like IMP203G and IMP403G that share the final '3' digit but seem to represent "Beveled" and "Frosted" respectively, suggesting the numbers may not *always* encode style consistently.
+
+**3. Size and Color Variations:**
+
+* **Size:**  For "IMP" products, size variations are generally *not* encoded directly in the SKU. The size is indicated in the product name and description but doesn't follow a clear pattern within the SKU. For RIC, ROP, RBP, the numeric part of the SKU directly corresponds with a size (e.g., 6, 8, 10).  For CIA and WTR, the numeric part also seems size-related, but with a different scale.
+* **Color:** For many "IMP" products, color is designated by a single letter suffix (e.g., 'G' for Gold). This is *not* consistent across all prefixes. For others like the reflection series, color is described in the full name of the product but is not part of the SKU itself. The Marble Arch acrylics don't encode color in their SKU, even if the base is coloured.
+
+**4. Unique Numbering or Suffix Trends:**
+
+* The "IMP" series uses three-digit numbers after the prefix, while the "Reflection" series (RIC, ROP, RBP) generally use a single digit (related to size).  RSL uses a single digit as well, likely referencing size like its "Reflection" counterparts. "PMA" SKUs follow a different convention with alphanumeric suffixes which could encode properties like size, color, and base material. 
+
+
+**5. Odd Exceptions to Typical SKU Rules:**
+
+* **IMP203G vs. IMP403G:** As noted above, these share a numeric component ('203', '403'), but they represent distinctly different styles  ("Beveled" vs. "Frosted"). This inconsistency suggests less rigid system for the number segment within the "IMP" series than initially suspected.
+* **Inconsistent Size Encoding in IMP:** The lack of clear size encoding within the "IMP" prefix SKUs contrasts with the other product lines where size is more clearly part of the SKU.  This makes it harder to infer size from the "IMP" SKUs alone.
+* **PMA SKU Complexity:** The PMA SKUs (e.g., PMA36GMPIB1R) are significantly longer and more complex than the others. Deciphering this format requires more data points. For instance, what would a blue, medium version look like?
+
+**Conclusions:**
+
+The SKU system shows partial consistency, especially within specific product lines like "Reflection" and "Impress." However, the "IMP" prefix reveals inconsistencies in encoding style and size.  More investigation and potentially access to the SKU creation logic would help clarify the full system.  The PMA SKUs require further scrutiny to understand the encoding pattern completely.  This report provides a foundation for further SKU analysis and potential optimization of the system for clarity and consistency.
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1740423801.560916 40268868 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+(base) dylanmurzello@MacBookAir Json % 
+
